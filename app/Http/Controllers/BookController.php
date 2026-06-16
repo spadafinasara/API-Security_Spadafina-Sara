@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
         // UNSECURE
         // Missing Validation
@@ -100,12 +101,12 @@ class BookController extends Controller
         }
 
         // SECURE
-        // if(!$user = Auth::user()){
-        //     return response()->json(['error' => 'Not autorised'], 401);
-        // }
-        // if($user->id != $book->user_id){
-        //     return response()->json(['error' => 'Not autorised'], 401);
-        // }
+        if(!$user = Auth::user()){
+            return response()->json(['error' => 'Not autorised'], 401);
+        }
+        if($user->id != $book->user_id){
+            return response()->json(['error' => 'Not autorised'], 401);
+        }
 
         // UNSECURE
         // Missing Validation
@@ -139,12 +140,12 @@ class BookController extends Controller
             return response()->json(['error' => 'Book not found'], 404);
         }
         // SECURE
-        // if(!$user = Auth::user()){
-        //     return response()->json(['error' => 'Not autorised'], 401);
-        // }
-        // if($user->id != $book->user_id){
-        //     return response()->json(['error' => 'Not autorised'], 401);
-        // }
+        if(!$user = Auth::user()){
+            return response()->json(['error' => 'Not autorised'], 401);
+        }
+        if($user->id != $book->user_id){
+            return response()->json(['error' => 'Not autorised'], 401);
+        }
 
         // UNSECURE
         $book->delete();
