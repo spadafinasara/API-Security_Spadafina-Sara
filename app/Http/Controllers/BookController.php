@@ -65,9 +65,11 @@ class BookController extends Controller
 
     public function store(BookRequest $request)
     {
-        // UNSECURE
-        // Missing Validation
-        $book = Book::create($request->all());
+        // SECURE
+        $data = $request->validated();
+        $data['user_id'] = Auth::user()->id;
+
+        $book = Book::create($data);
 
         return response()->json([
             'data' => $book,
@@ -92,7 +94,7 @@ class BookController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(BookRequest $request, $id)
     {
         $book = Book::find($id);
 
@@ -108,10 +110,10 @@ class BookController extends Controller
             return response()->json(['error' => 'Not autorised'], 401);
         }
 
-        // UNSECURE
-        // Missing Validation
-        // Missing Authorization Check
-        $book->update($request->all());
+        // SECURE
+         $data = $request->validated();
+
+        $book->update($data);
 
         return response()->json([
             'data' => $book,
