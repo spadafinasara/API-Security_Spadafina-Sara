@@ -109,7 +109,7 @@ class AuthController extends Controller
                 ]);
     }
                                     
-    function getUserInfo($id) {
+    function getUserInfo() {
         
         // SECURE (manual)
         // $token = $request->bearerToken();
@@ -135,7 +135,8 @@ class AuthController extends Controller
         // }
 
         // UNSECURE
-        if(!$user = User::find($id)){
+        $id['user_id'] = Auth::user()->id;
+        if(!$user = $id){
             return response()->json(['error' =>  ['User not found']]);
         };
 

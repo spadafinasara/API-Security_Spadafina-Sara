@@ -8,8 +8,8 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register');
     Route::post('login', 'login');
     Route::post('passwordRecover', 'passwordRecovery');
-    Route::get('/user/{id}','getUserInfo'); // UNSECURE
-    Route::put('/email-change',[AuthController::class,'updateEmail']); // UNSECURE
+    // Route::get('/user/{id}','getUserInfo'); UNSECURE
+    // Route::put('/email-change',[AuthController::class,'updateEmail']); // UNSECURE
 
 });
 
